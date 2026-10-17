@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Segmenza AI — Customer Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-mark">S</span><span>segmenza<span class="brand-ai"> AI</span></span></a>
+    <div class="side-label">WORKSPACE</div>
+    <a class="nav-item active" href="/"><span>◈</span> Customer intelligence</a>
+    <a class="nav-item" href="#predictor"><span>⌁</span> Segment predictor</a>
+    <div class="side-label side-label-lower">MODEL STACK</div>
+    <div class="model-card"><span class="status-dot"></span><div><b>Random Forest</b><small>Classification pipeline</small></div><span class="mini-check">✓</span></div>
+    <div class="model-card"><span class="status-dot purple"></span><div><b>Gemini AI</b><small>Insight generation</small></div><span class="live-pill">{% if gemini_ready %}READY{% else %}SETUP{% endif %}</span></div>
+    <div class="sidebar-bottom"><div class="avatar">ML</div><div><b>Analytics workspace</b><small>Local development</small></div><span class="more">···</span></div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><div class="crumb">Workspace <span>/</span> <b>Customer intelligence</b></div><div class="top-right"><span class="secure"><i></i> Local environment</span><div class="user-chip">ML</div></div></header>
+    <section class="hero"><div><div class="eyebrow"><span class="sparkle">✦</span> MACHINE LEARNING + GENERATIVE AI</div><h1>Understand your customers<span class="gradient-text">. Better.</span></h1><p>Turn customer attributes into a segment prediction and an actionable, AI-assisted explanation.</p></div><div class="hero-orb"><div class="orb-inner">✦</div><span class="orb-ring ring-one"></span><span class="orb-ring ring-two"></span></div></section>
+    <section class="stats-grid">
+      <article class="stat-card"><div class="stat-top"><span>Prediction engine</span><span class="stat-icon violet">◈</span></div><div class="stat-value">Random Forest</div><div class="stat-foot"><span class="tiny-dot green"></span> Trained pipeline loaded</div></article>
+      <article class="stat-card"><div class="stat-top"><span>AI insight layer</span><span class="stat-icon blue">✧</span></div><div class="stat-value">Gemini API</div><div class="stat-foot">{% if gemini_ready %}<span class="tiny-dot green"></span> API key detected{% else %}<span class="tiny-dot amber"></span> Add key in .env{% endif %}</div></article>
+      <article class="stat-card"><div class="stat-top"><span>Segmentation method</span><span class="stat-icon pink">⌘</span></div><div class="stat-value">K-Prototypes</div><div class="stat-foot"><span class="tiny-dot green"></span> Cluster labels as target</div></article>
+    </section>
+    <section class="workspace-grid" id="predictor">
+      <div class="form-panel panel"><div class="panel-heading"><div><div class="section-kicker">PREDICTION WORKSPACE</div><h2>Customer profile</h2><p>Fill in the customer attributes to run your model.</p></div><div class="step-badge">01 <span>/ 02</span></div></div>
+        <form action="/predict" method="post" id="customer-form">
+          <div class="form-section-title"><span class="section-number">A</span><div><b>Customer details</b><small>Basic profile and purchase behaviour</small></div></div>
+          <div class="input-grid">
+            <label class="field"><span>Age <em>*</em></span><input type="number" name="Age" min="18" max="100" value="35" required><small>Customer age in years</small></label>
+            <label class="field"><span>Purchase amount <em>*</em></span><div class="input-prefix"><span>$</span><input type="number" name="PurchaseAmountUSD" min="0" step="0.01" value="250" required></div><small>Amount in USD</small></label>
+            <label class="field"><span>Previous purchases <em>*</em></span><input type="number" name="PreviousPurchases" min="0" value="5" required><small>Number of prior purchases</small></label>
+            <label class="field"><span>Product category <em>*</em></span><select name="Category">{% for category in categories %}<option value="{{ category }}">{{ category }}</option>{% endfor %}</select><small>Category bought by customer</small></label>
+          </div>
+          <div class="form-section-title second-section"><span class="section-number">B</span><div><b>Engagement signals</b><small>Subscription, promotions and frequency</small></div></div>
+          <div class="input-grid">
+            <label class="field"><span>Subscription</span><select name="SubscriptionStatus"><option>Yes</option><option>No</option></select></label>
+            <label class="field"><span>Discount applied</span><select name="DiscountApplied"><option>No</option><option>Yes</option></select></label>
+            <label class="field"><span>Promo code used</span><select name="PromoCodeUsed"><option>No</option><option>Yes</option></select></label>
+            <label class="field"><span>Purchase frequency</span><select name="FrequencyOfPurchases">{% for frequency in frequencies %}<option value="{{ frequency }}">{{ frequency }}</option>{% endfor %}</select></label>
+          </div>
+          <div class="form-footer"><span><span class="required-star">*</span> Required fields</span><button class="primary-button" type="submit"><span>Generate segment insight</span><b>↗</b></button></div>
+        </form>
+      </div>
+      <aside class="right-column">
+        <div class="panel process-panel"><div class="panel-heading compact"><div><div class="section-kicker">HOW IT WORKS</div><h2>From data to insight</h2></div><span class="process-symbol">⟶</span></div>
+          <div class="process-step"><div class="process-icon icon-purple">01</div><div><b>Customer inputs</b><p>Eight features are prepared for the saved pipeline.</p></div></div><div class="process-line"></div>
+          <div class="process-step"><div class="process-icon icon-blue">02</div><div><b>Random Forest</b><p>Predicts one of your learned cluster labels.</p></div></div><div class="process-line"></div>
+          <div class="process-step"><div class="process-icon icon-pink">03</div><div><b>Gemini explanation</b><p>Turns the result into readable observations and test ideas.</p></div></div>
+        </div>
+        <div class="note-card"><div class="note-icon">✦</div><div><b>Built for exploration</b><p>AI suggestions are hypotheses to test—not guaranteed outcomes or proof of customer behaviour.</p></div></div>
+      </aside>
+    </section>
+    <footer class="page-footer"><span>SEGMENTZA AI <span>•</span> CUSTOMER ANALYTICS</span><span>Powered by your local ML pipeline{% if gemini_ready %} + Gemini{% endif %}</span></footer>
+  </main>
+</div>
+<script>
+document.getElementById('customer-form').addEventListener('submit', function () {
+  const btn = this.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.querySelector('span').textContent = 'Analysing customer…';
+});
+</script>
+</body></html>

@@ -1,0 +1,17 @@
+{
+    "model_type": "Random Forest Classifier",
+    "target": "Cluster_Scaled",
+    "features": [
+        "Age",
+        "PurchaseAmountUSD",
+        "PreviousPurchases",
+        "Category",
+        "SubscriptionStatus",
+        "DiscountApplied",
+        "PromoCodeUsed",
+        "FrequencyOfPurchases"
+    ],
+    "test_accuracy": 0.9526,
+    "macro_f1": 0.9531,
+    "number_of_clusters": 3
+}
